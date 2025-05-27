@@ -13,7 +13,7 @@ fun main(args: Array<String>) {
     test()
 }
 
-fun test() {
+private fun test() {
     val setOfInput = linkedSetOf<Pair<Int, IntArray>>()
     setOfInput.add(2 to intArrayOf(0,1,2,2,3,0,4,2))
     setOfInput.add(3 to intArrayOf(3, 2, 2, 3))
@@ -43,7 +43,7 @@ fun test() {
 }
 
 
-fun removeElement(nums: IntArray, `val`: Int): Int {
+private fun removeElement(nums: IntArray, `val`: Int): Int {
     if (nums.isEmpty())
         return 0
 
@@ -73,7 +73,7 @@ fun removeElement(nums: IntArray, `val`: Int): Int {
     return counter
 }
 
-fun removeElement2(nums: IntArray, `val`: Int): Int {
+private fun removeElement2(nums: IntArray, `val`: Int): Int {
     var k = 0
 
     for (i in 0 until nums.size) {
