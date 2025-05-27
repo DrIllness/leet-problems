@@ -68,3 +68,22 @@ fun removeDuplicates(nums: IntArray): Int {
 
     return j
 }
+
+fun removeDuplicates2(nums: IntArray): Int {
+    if (nums.isEmpty()) return 0
+
+    if (nums.size == 1) return 1
+
+    var i = 0
+    var j = 0
+    while (i <= nums.indices.last) {
+        if (nums[i] > nums[j]) {
+            nums[++j] = nums[i]
+        }
+        i++
+    }
+
+    j++
+
+    return j
+}
