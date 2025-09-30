@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
     println("expected profit == $profitExpected, actual profit == $profitActual")
 }
 
-fun maxProfit(prices: IntArray): Int {
+private fun maxProfit(prices: IntArray): Int {
     var minPrice = prices[0]
     var maxProfit = 0
 
