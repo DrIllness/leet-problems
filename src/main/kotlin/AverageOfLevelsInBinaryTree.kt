@@ -44,7 +44,7 @@ fun main() {
     root.right?.left = TreeNode(15)
     root.right?.right = TreeNode(7)
 
-    println(averageOfLevels(root).printArr())
+    averageOfLevels(root).printArr()
 }
 
 fun averageOfLevels(root: TreeNode?): DoubleArray {
