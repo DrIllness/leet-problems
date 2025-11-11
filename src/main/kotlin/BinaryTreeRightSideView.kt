@@ -1,5 +1,3 @@
-import com.sun.source.tree.Tree
-
 /**
  * 199. Binary Tree Right Side View
 
@@ -55,7 +53,7 @@ fun main() {
         right?.right = TreeNode(4)
         left = TreeNode(2)
         left?.right = TreeNode(5)
-        rightSideView(root).printList()
+        rightSideView2(root).printList()
     }
 
     val root2 = TreeNode(1)
@@ -64,7 +62,7 @@ fun main() {
         left?.left = TreeNode(4)
         left?.left?.left = TreeNode(5)
         right = TreeNode(3)
-        rightSideView(this).printList()
+        rightSideView2(this).printList()
     }
 }
 
@@ -91,6 +89,21 @@ fun rightSideView(root: TreeNode?): List<Int> {
             }
         }
     }
+
+    return result
+}
+
+fun rightSideView2(root: TreeNode?): List<Int> {
+    val result = mutableListOf<Int>()
+
+    fun dfs(node: TreeNode?, depth: Int) {
+        if (node == null) return
+        if (depth == result.size) result.add(node.`val`)
+        dfs(node.right, depth + 1)
+        dfs(node.left, depth + 1)
+    }
+
+    dfs(root, 0)
 
     return result
 }
