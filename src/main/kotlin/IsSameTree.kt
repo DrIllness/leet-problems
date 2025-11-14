@@ -58,7 +58,7 @@ fun main() {
     println(isSameTree(root2, root3))
 }
 
-fun isSameTree(p: TreeNode?, q: TreeNode?): Boolean {
+fun isSameTree1(p: TreeNode?, q: TreeNode?): Boolean {
     val queue1 = ArrayDeque<TreeNode?>()
     val queue2 = ArrayDeque<TreeNode?>()
     queue1.add(p)
@@ -82,4 +82,11 @@ fun isSameTree(p: TreeNode?, q: TreeNode?): Boolean {
 
 
     return queue1.isEmpty() && queue2.isEmpty()
+}
+
+fun isSameTree(p: TreeNode?, q: TreeNode?): Boolean {
+    if (p == null && q == null) return true
+    if (p?.`val` != q?.`val`) return false
+
+    return isSameTree(p?.right, q?.right) && isSameTree(p?.left, q?.left)
 }
