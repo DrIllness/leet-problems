@@ -29,7 +29,7 @@ fun main() {
     val node = buildTree(intArrayOf(3, 9, 20, 15, 7), intArrayOf(9, 3, 15, 20, 7))
 }
 
-fun buildTree(preorder: IntArray, inorder: IntArray): TreeNode? {
+private fun buildTree(preorder: IntArray, inorder: IntArray): TreeNode? {
     if (preorder.isEmpty()) return null
 
     val valueToIndexInorder = hashMapOf<Int, Int>()
