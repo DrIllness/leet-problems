@@ -1,5 +1,6 @@
 package algorithms_playground
 
+import TreeNode
 import kotlin.math.max
 
 fun main() {
@@ -8,6 +9,19 @@ fun main() {
     println(sumArrRec1(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0, 7))
     println(sumArrRec(intArrayOf(1, 2, 3, 4, 5, 6, 7, 8), 0))
     println(findMax(intArrayOf(1, 56, 1, 3, 65, 12), 0, 0))
+
+    val root = TreeNode(1)
+    root.apply {
+        right = TreeNode(2)
+        right?.right = TreeNode(3)
+        right?.left = TreeNode(4)
+        right?.right?.right = TreeNode(5)
+        right?.right?.right?.right = TreeNode(6)
+        right?.right?.right?.right?.right = TreeNode(7)
+    }
+
+    println(maxDepth(root))
+    println(sumOfBinaryTree(root))
 }
 
 private fun reverseStringRec(source: String): String {
@@ -56,4 +70,18 @@ private fun findMax(arr: IntArray, i: Int, max: Int): Int {
 fun maxRec(arr: IntArray, i: Int = 0): Int {
     if (i == arr.size - 1) return arr[i]
     return max(arr[i], maxRec(arr, i + 1))
+}
+
+fun maxDepth(treeNode: TreeNode?): Int {
+    if (treeNode == null) return 0
+
+    val left = maxDepth(treeNode.left)
+    val right = maxDepth(treeNode.right)
+
+    return 1 + max(left, right)
+}
+
+fun sumOfBinaryTree(root: TreeNode?): Int {
+    if (root == null) return 0
+    return root.`val` + sumOfBinaryTree(root.left) + sumOfBinaryTree(root.right)
 }

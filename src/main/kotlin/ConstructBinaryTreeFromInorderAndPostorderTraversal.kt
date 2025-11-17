@@ -29,10 +29,31 @@
 
 fun main() {
     val tree = buildTree(intArrayOf(9, 3, 15, 20, 7), intArrayOf(9, 15, 7, 20, 3))
+    tree
 }
 
 private fun buildTree(inorder: IntArray, postorder: IntArray): TreeNode? {
     if (postorder.isEmpty()) return null
 
-    return null
+    val inorderIndex = hashMapOf<Int, Int>()
+    inorder.forEachIndexed { i, v ->
+        inorderIndex[v] = i
+    }
+
+    var postorderIndex = postorder.size - 1
+
+    fun build(start: Int, end: Int): TreeNode? {
+        if (start > end) return null
+
+        val midVal = postorder[postorderIndex--]
+        val root = TreeNode(midVal)
+        val mid = inorderIndex[midVal]!!
+
+        root.right = build(mid + 1, end)
+        root.left = build(start, mid - 1)
+
+        return root
+    }
+
+    return build(0, inorder.size - 1)
 }
