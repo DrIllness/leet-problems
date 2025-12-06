@@ -76,6 +76,17 @@ fun lowestCommonAncestor2(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode
 }
 
 fun lowestCommonAncestor(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
-    // v2, try to improve runtime
-    return root
+    fun findTarget(node: TreeNode?): TreeNode? {
+        if (node == null) return null
+        if (node == p || node == q) return node
+
+        val left = findTarget(node.left)
+        val right = findTarget(node.right)
+
+        if (left != null && right != null) { return node }
+
+        return left ?: right
+    }
+
+    return findTarget(root)
 }
