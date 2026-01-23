@@ -51,7 +51,7 @@ fun main() {
 
     println("before")
     input.printArr()
-    //solve(input)
+    //solve2(input)
     println("after")
     input.printArr()
 
@@ -62,7 +62,7 @@ fun main() {
 
     println("before")
     input2.printArr()
-    //solve(input2)
+    //solve2(input2)
     println("after")
     input2.printArr()
 
@@ -72,7 +72,7 @@ fun main() {
         charArrayOf('X','O','X','O','X','O'),
         charArrayOf('O','X','O','X','O','X')
     )
-    solve(input3)
+    solve2(input3)
     input3.printArr()
 
 }
@@ -110,6 +110,49 @@ fun solve(board: Array<CharArray>) {
             potentiallySurrounded.clear()
             j++
         }
+        i++
+    }
+
+}
+
+private fun solve2(board: Array<CharArray>) {
+    if (board.size <= 1 ) return
+
+    fun findSafeNeighbour(row: Int, column: Int) {
+        if (row < 0 || column < 0 || row >= board.size || column >= board[0].size || board[row][column] != 'O')
+            return
+
+        board[row][column] = 'S'
+
+        findSafeNeighbour(row - 1, column)
+        findSafeNeighbour(row + 1, column)
+        findSafeNeighbour(row, column + 1)
+        findSafeNeighbour(row, column - 1)
+
+    }
+
+    val rows = board.size
+    val cols = board[0].size
+    for (i in 0 until rows) {
+        findSafeNeighbour(i, 0)
+        findSafeNeighbour(i, cols - 1)
+    }
+    for (j in 0 until cols) {
+        findSafeNeighbour(0, j)
+        findSafeNeighbour( rows - 1, j)
+    }
+
+    var i = 0
+    var j = 0
+    while (i < board.size) {
+        while (j < board[0].size) {
+            when(board[i][j]) {
+                'S' -> board[i][j]= 'O'
+                else -> board[i][j] = 'X'
+            }
+            j++
+        }
+        j = 0
         i++
     }
 
