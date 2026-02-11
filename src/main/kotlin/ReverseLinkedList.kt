@@ -1,5 +1,3 @@
-import kotlin.math.max
-
 /**
  * 92. Reverse Linked List II
  * Medium
@@ -63,6 +61,50 @@ fun ListNode?.print() {
 }
 
 fun reverseBetween(head: ListNode?, left: Int, right: Int): ListNode? {
+    if (head == null || left == right) return head
+
+    val dummyHead: ListNode? = ListNode(Int.MIN_VALUE)
+    dummyHead?.next = head
+
+    var node = dummyHead
+    var i = 0
+
+    var lastNodeOfPrefix: ListNode? = null
+
+    while (node != null) {
+        if (i == left - 1) {
+            lastNodeOfPrefix = node
+
+            var newTail = node.next
+            var newHead: ListNode? = null
+
+            var prev: ListNode? = null
+            var next: ListNode? = null
+            var curr = node
+
+            while (i <= right) {
+                next = curr?.next
+                curr?.next = prev
+
+                prev = curr
+                curr = next
+                i++
+            }
+            newHead = prev
+            lastNodeOfPrefix.next = newHead
+
+            newTail?.next = curr
+            break
+        }
+
+        i++
+        node = node.next
+    }
+
+    return dummyHead?.next
+}
+
+fun reverseBetween2(head: ListNode?, left: Int, right: Int): ListNode? {
     if (head == null || left == right) return head
 
     val dummyHead: ListNode? = ListNode(Int.MIN_VALUE)
