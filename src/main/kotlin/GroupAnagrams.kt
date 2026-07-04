@@ -50,13 +50,9 @@ fun groupAnagrams(strs: Array<String>): List<List<String>> {
     var anagrams = hashMapOf<String, MutableList<String>>()
     var i = 0
     while (i < strs.size) {
-        var strKey = makeAnagramKey(strs[i], buffer)
-        if (anagrams.containsKey(strKey)) {
-            anagrams[strKey]?.add(strs[i])
-        } else {
-            anagrams[strKey] = mutableListOf(strs[i])
-        }
-        clearBuffer(buffer)
+        val strKey = makeAnagramKey(strs[i], buffer)
+        anagrams.getOrPut(strKey) { mutableListOf() }.add(strs[i])
+        buffer.fill(0)
         i++
     }
 
@@ -78,14 +74,6 @@ private fun makeAnagramKey(source: String, buffer: IntArray): String {
 
     return anagramBuffer.toString()
 }
-
-private fun clearBuffer(buffer: IntArray) {
-    var i = 0
-    while (i < buffer.size) {
-        buffer[i++] = 0
-    }
-}
-
 
 fun List<List<Any>>.printListOfLists() {
     forEach { containerList ->
