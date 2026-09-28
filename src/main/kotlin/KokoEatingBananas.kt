@@ -55,7 +55,7 @@ fun main() {
 }
 
 fun minEatingSpeed(piles: IntArray, h: Int): Int {
-    var high = Int.MAX_VALUE - 1
+    var high = Int.MAX_VALUE
     var low = 1
 
     fun isValidCandidate(candidate: Int): Boolean {
