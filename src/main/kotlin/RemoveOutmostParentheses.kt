@@ -55,13 +55,6 @@ fun main() {
     println(removeOuterParentheses("()()")) // ""
 }
 
-fun test() {
-    var test = ""
-    for (i in 0..10) {
-        test += "$i"
-    }
-}
-
 private fun removeOuterParentheses(s: String): String {
     var balance = 0
     val ans = StringBuilder()
