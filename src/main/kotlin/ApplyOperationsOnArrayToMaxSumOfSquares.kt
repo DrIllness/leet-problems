@@ -17,7 +17,7 @@ import kotlin.math.pow
  *
  * Return the maximum sum of squares you can achieve.
  *
- * Since the answer can be very large, return it modulo 109 + 7.
+ * Since the answer can be very large, return it modulo 10^9 + 7.
  *
  *
  *
@@ -35,36 +35,84 @@ import kotlin.math.pow
  * Input: nums = [4,5,4,7], k = 3
  * Output: 90
  * Explanation: We do not need to apply any operations.
- * We can choose the elements 7, 5, and 4 with a sum of squares: 72 + 52 + 42 = 90.
+ * We can choose the elements 7, 5, and 4 with a sum of squares: 7^2 + 5^2 + 4^2 = 90.
  * It can be shown that this is the maximum value we can get.
  *
  *
  * Constraints:
  *
  * 1 <= k <= nums.length <= 105
- * 1 <= nums[i] <= 109
+ * 1 <= nums[i] <= 10^9
  *
  * */
 
 fun main() {
     println(maxSum(listOf(2,6,5,8), 2))
     println(maxSum(listOf(4,5,4,7), 3))
+    println(maxSum(listOf(96,66,60,58,32,17,63,21,30,44,15,8,98,93), 2)) // 32258
 }
 
-private fun maxSum(nums: List<Int>, k: Int): Int {
-    var i = 0
-    var j = 0
-    var squares = hashSetOf<Int>()
+private fun maxSum2(nums: List<Int>, k: Int): Int {
+    if (nums.size < k) return -1
+
     var res = 0L
     val mod = (10.0.pow(9.0) + 7).toLong()
 
-    // AND_res == 0 ==> no overlapping in bits, hence OR_res >= nums[i], nums[j]
+    val sorted = nums.sorted().toMutableList()
+    var i = 0
+    var j = sorted.size - 1
+    var loops = k
+    while (loops > 0 && j >= i) {
+        if (j == i) {
+            loops--
+            i = 0
+            j--
+            continue
+        }
 
-    // calc res
-    for (i in squares) {
-        res += nums[i] * nums[i]
+        if (sorted[j] xor sorted[i] != 0) {
+            val or = sorted[j] or sorted[i]
+            val and = sorted[j] and sorted[i]
+            if (or > sorted[j]) {
+                sorted[j] = or
+                sorted[i] = and
+            }
+        }
+        i++
+    }
+
+    for (n in sorted.size - 1 downTo sorted.size - k) {
+        res += sorted[n].toLong() * sorted[n].toLong()
         res %= mod
     }
 
     return res.toInt()
+}
+
+private fun maxSum(nums: List<Int>, k: Int): Int {
+    if (nums.size < k) return -1
+
+    val mod = (10.0.pow(9.0) + 7).toLong()
+    val bitCount = IntArray(30) { 0 }
+
+    for (num in nums) {
+        for (b in bitCount.indices) {
+            bitCount[b] += if (num and (1 shl b) > 0) 1 else 0
+        }
+    }
+
+    var ans = 0L
+    for (i in 1..k) {
+        var nextLargestNumber = 0
+        for (b in bitCount.indices) {
+            if (bitCount[b] > 0) {
+                nextLargestNumber = nextLargestNumber or (1 shl b)
+                bitCount[b] -= 1
+            }
+        }
+        ans += nextLargestNumber.toLong() * nextLargestNumber.toLong()
+        ans %= mod
+    }
+
+    return ans.toInt()
 }
