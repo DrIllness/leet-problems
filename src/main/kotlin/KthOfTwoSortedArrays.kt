@@ -148,8 +148,8 @@ private fun kthElement2(a: IntArray, b: IntArray, k: Int): Int {
         val mid = left + (right - left) / 2
         val sliceDisbalance = moveSlicePoint(mid)
         if (sliceDisbalance == 0) {
-            val bSlice = minOf(k - mid - 2, b.size - 1)
             val aSlice = minOf(mid, a.size - 1)
+            val bSlice = minOf(kIdx - mid - 1, b.size - 1)
             if (bSlice < 0) {
                 return a[aSlice]
             } else if (aSlice < 0) {
@@ -208,7 +208,7 @@ private fun kthElement(a: IntArray, b: IntArray, k: Int): Int {
         }
     }
     var left = -1 // best line EVER
-    var right = minOf(k, a.size)
+    var right = k
 
     var mid = 0
     while (left <= right) {
