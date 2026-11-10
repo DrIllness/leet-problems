@@ -36,7 +36,7 @@
  *
  * */
 
-data class KokoTestCase(val piles: IntArray, val h: Int, val expected: Int)
+private data class KokoTestCase(val piles: IntArray, val h: Int, val expected: Int)
 
 fun main() {
     val testCases = listOf(

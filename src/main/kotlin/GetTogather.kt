@@ -12,7 +12,7 @@ import kotlin.math.abs
  * The first line contains integer n(1≤n≤105), next n
  *  lines contain pairs of integers xi
  *  and vi
- *  (−109≤xi≤109
+ *  (−109≤xi≤10^9
  * , 1≤vi≤109
  * ).
  *
