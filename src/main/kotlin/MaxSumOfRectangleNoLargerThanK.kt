@@ -39,7 +39,6 @@ fun main() {
 
 private fun maxSumSubmatrix(matrix: Array<IntArray>, k: Int): Int {
     val temp = IntArray(matrix.size)
-    val pre = IntArray(matrix.size)
     var max = Int.MIN_VALUE
 
     for (c1 in 0 until matrix[0].size) {
@@ -49,19 +48,20 @@ private fun maxSumSubmatrix(matrix: Array<IntArray>, k: Int): Int {
                 temp[rowIdx] += matrix[rowIdx][c2]
             }
 
+            // pre[i] - pre[j] <= k
+            // pre[j] >= pre[i] - k
+            var pre = 0
             val treeSet = TreeSet<Int>().apply { add(0) }
             for (rowIdx in 0 until matrix.size) {
-                pre[rowIdx] = if (rowIdx == 0) temp[rowIdx] else temp[rowIdx] + pre[rowIdx - 1]
-                treeSet.ceiling(pre[rowIdx] - k)?.let { ceilVal ->
-                    max = maxOf(max, pre[rowIdx] - ceilVal)
+                pre += temp[rowIdx]
+                treeSet.ceiling(pre - k)?.let { ceilVal ->
+                    max = maxOf(max, pre - ceilVal)
                 }
-                treeSet.add(pre[rowIdx])
+                treeSet.add(pre)
             }
-            pre.fill(0)
         }
         temp.fill(0)
     }
-
 
     return max
 }
