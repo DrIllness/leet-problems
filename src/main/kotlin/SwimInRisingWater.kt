@@ -62,22 +62,20 @@ fun main() {
 private fun swimInWater(grid: Array<IntArray>): Int {
     var minTime = 2500
     val vector = arrayOf(-1 to 0, 0 to 1, 1 to 0, 0 to -1)
-    fun canReachGivenT(y: Int, x: Int, currTime: Int, timeLimit: Int, visited: Array<BooleanArray>): Boolean {
-        val timeSpent = maxOf(currTime, grid[y][x])
+    fun canReachGivenT(y: Int, x: Int, timeLimit: Int, visited: Array<BooleanArray>): Boolean {
         visited[y][x] = true
-        if (y == grid.size - 1 && x == grid[0].size - 1 && timeSpent <= timeLimit) return true
-
-        if (timeSpent > timeLimit) return false
+        if (y == grid.size - 1 && x == grid[0].size - 1 && grid[y][x] <= timeLimit) return true
 
         var canReach = false
         for (v in vector) {
             val newY = y+v.first
             val newX = x+v.second
-            if (newY < 0 || newX < 0 || newY >= grid.size || newX >= grid[0].size || visited[newY][newX]) {
+            if (newY < 0 || newX < 0 || newY >= grid.size || newX >= grid[0].size || visited[newY][newX] ||
+                grid[y][x] > timeLimit) {
                 continue
             }
 
-            canReach = canReach || canReachGivenT(newY, newX, timeSpent, timeLimit, visited)
+            canReach = canReach || canReachGivenT(newY, newX, timeLimit, visited)
         }
         return canReach
     }
@@ -87,7 +85,7 @@ private fun swimInWater(grid: Array<IntArray>): Int {
     while (low <= high) {
         val mid = low + (high - low) / 2
         val visited = Array(grid.size) { BooleanArray(grid[0].size) { false } }
-        if (canReachGivenT(0, 0, 0, mid, visited)) {
+        if (canReachGivenT(0, 0, mid, visited)) {
             minTime = mid
             high = mid - 1
         } else {
