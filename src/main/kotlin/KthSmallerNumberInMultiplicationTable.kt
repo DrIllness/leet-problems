@@ -38,6 +38,7 @@ fun main() {
 }
 
 private fun findKthNumber(m: Int, n: Int, k: Int): Int {
+    // m * log(m*n) --> min(m,n) log(m,n)
     fun countSmallerOrEqual(kCan: Int): Int {
         var count = 0
         val maxRow = minOf(kCan, m)
