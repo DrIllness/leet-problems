@@ -70,7 +70,7 @@ private fun smallestDistancePair(nums: IntArray, k: Int): Int {
     }
 
     var low = 0
-    var high = nums[nums.size - 1]
+    var high = nums[nums.size - 1] - nums[0]
     var res = -1
     while (low <= high) {
         val mid = low + (high - low) / 2

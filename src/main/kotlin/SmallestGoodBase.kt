@@ -54,7 +54,6 @@ fun main() {
 private fun smallestGoodBase(n: String): String {
     var bigN = n.toBigInteger()
 
-
     fun baseGivenPositions(positions: Int): BigInteger {
         var low = BigInteger.TWO
         var high = bigN
